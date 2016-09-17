@@ -68,7 +68,6 @@ DifferentialForms(R,v) : Exports == Implementation where
       ++ Calculates the Lie derivative L_X(a) of the differential 
       ++ form a with respect to the vector field X.
 
-    hodgeStar2 :(SMR,DRC) -> DRC
    
 
   Implementation ==  add 
@@ -133,13 +132,14 @@ DifferentialForms(R,v) : Exports == Implementation where
 
     -- flip 0->1, 1->0 
     flip(b:EAB):EAB ==
-      bl := convert(b)$EAB
+      --bl := convert(b)$EAB
+      bl:=b pretend List(Integer)
       [(i+1) rem 2 for i in bl]::EAB
 
 
     -- list the positions of a's (a=0,1) in x
     pos(x:EAB, a:Integer):List(Integer) ==
-      y:List(Integer):= convert(x)$EAB 
+      y:List(Integer):= x pretend List(Integer) 
       [j for j in 1..#y | y.j=a]
 
 
@@ -170,36 +170,20 @@ DifferentialForms(R,v) : Exports == Implementation where
     -- export
     dot(g,x,y) ==
       not symmetric? g => error(err2)
-      tx:List REA := x::List(REA)
-      ty:List REA := y::List(REA)
+      tx:List REA := x pretend List(REA)
+      ty:List REA := y pretend List(REA)
       tx = [] or ty = [] => 0::X
       if diagonal? g then -- better performance 
         reduce("+",[dot1(g,tx.j,ty.j) for j in 1..#tx])
       else
         reduce("+",[dot2(g,tx.j,ty.j) for j in 1..#tx])
 
-      
-
-    -- export
-    hodgeStar2(g,x) ==
-      not R has IntegralDomain => error(err1)
-      not diagonal? g => error(err5)
-      w := sqrt(abs(determinant(g))) -- volume factor
-      w = 0 => error(err3)
-      t:List(REA) := x::List(REA)
-      s := [copy(r) for r in t] -- we need a copy of x!
-      for j in 1..#t repeat
-        s.j.k := flip(s.j.k)
-        fs:= convert([s.j])$DRC
-        ft:= convert([t.j])$DRC
-        s.j.c := s.j.c * w * dot1(g,t.j,t.j)/leadingCoefficient(ft*fs)
-      convert(reverse s)$DRC
 
 
     -- export
     --proj0(x,p) ==
     --  p < 0 or p > #v => error(err4)
-    --  t:List REA := x::List REA
+    --  t:List REA := x pretend List REA
     --  idx := [j for j in 1..#t | #pos(t.j.k,1)=p]
     --  s := [copy(t.j) for j in idx::List(NNI)]
     --  convert(s)$DRC
@@ -218,7 +202,7 @@ DifferentialForms(R,v) : Exports == Implementation where
     conjBasisTerm(x:DRC):DRC ==
       x=0$DRC => error(err7)
       x ~= leadingBasisTerm(x) => error(err6)
-      t:EAB:=(x::List REA).1.k
+      t:EAB:=(x pretend List(REA)).1.k
       l:List(Integer):=exponents(t)
       m:List(DRC):=[generator(i)$DRC for i in 1..#l | l.i=0]
       m=[] => 1$DRC
@@ -228,7 +212,7 @@ DifferentialForms(R,v) : Exports == Implementation where
     atomizeBasisTerm(x:DRC):List(DRC) ==
       x=0$DRC => error(err7)
       x ~= leadingBasisTerm(x) => error(err6)
-      t:EAB:=(x::List REA).1.k
+      t:EAB:=(x pretend List(REA)).1.k
       l:List(Integer):=exponents(t)
       [generator(i)$DRC for i in 1..#l | l.i=1] 
 

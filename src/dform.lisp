@@ -3,7 +3,7 @@
 (defun compile-dform ()
   (progn
     (|doSystemCommand| (format nil "cd ~Alib" *dform*))
-    (|doSystemCommand| (format nil "compile ../src/comb.spad )quiet"))))
+    (|doSystemCommand| (format nil "compile ../src/dform.spad )quiet"))))
 
 (defun load-dform ()
   (if (probe-file (format nil "~Alib/DFORM.NRLIB/DFORM.lsp" *dform*))
