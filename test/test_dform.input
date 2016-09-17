@@ -66,7 +66,7 @@ res.7 := test (d zeroForm('a)$M = reduce(_+,[D(a(x),xs.i)*dx.i for i in 1..n]))
 -- products (à la Flanders, vector forms)
 res.8 := test ( x*dx = reduce(_+,[x.i*dx.i for i in 1..n]))
 res.9 := test ( dx * dx = 0)
-res.10 := true --test ( (x*dx)*dx = -dx*(x*dx))
+res.10 := test ( (x*dx)*dx = -dx*(x*dx))
 
 -- (co-)vector field
 res.11 := test (vectorField(W)$M * dx = dx * vectorField(W)$M)

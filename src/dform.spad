@@ -1,15 +1,15 @@
 )abbrev package DFORM DifferentialForms
 ++ Author: Kurt Pagani <nilqed@gmail.com>
 ++ Date Created: October 2014 
-++ Revised: Sat Jan 02 19:52:00 CET 2016
+++ Revised: Sat Sep 17 17:10:00 CET 2016
 ++ License: BSD
 ++ Description: Differential form methods
-++ Requirements: DeRhamComplex (+) 
-++ Documentation: nilqed.github.io/TBD
+++ Requirements: DeRhamComplex 
+++ Documentation: Sphinx, folder doc.
 ++
 DifferentialForms(R,v) : Exports == Implementation where
     
-  R: Join(Ring,Comparable) -- IntegralDomain instead of Ring?
+  R: Join(IntegralDomain,Comparable)
   v: List Symbol
 
   X   ==> Expression R
@@ -71,7 +71,21 @@ DifferentialForms(R,v) : Exports == Implementation where
    
 
   Implementation ==  add 
+
+    -- error messages           
+    err1:="Metric tensor must be symmetric"
+    err2:="Degenerate metric"
+    err3:="Index out of range" 
+    err4:="Not implemented"
+    err5:="Basis term expected"
+    err6:="Zero is not a basis term"
+
+
+    -- conversion functions (not very nice ;)
+    eab2li(x:EAB):List(Integer) == x pretend List(Integer)
+    drc2rea(x:DRC):List(REA) == x pretend List(REA)
     
+
     n:NNI:=#v
     d(f) == exteriorDifferential(f)
     one () == 1@DRC
@@ -107,18 +121,7 @@ DifferentialForms(R,v) : Exports == Implementation where
       reduce(_+,l)
 
 
-    -- error messages
-    err1:="CoefRing has not IntegralDomain"
-    err2:="Metric tensor is not symmetric"
-    err3:="Degenerate metric"
-    err4:="Index out of range" 
-    err5:="Not implemented"
-    err6:="Basis term expected"
-    err7:="Zero is not a basis term"
-
-
     volumeForm(g:SMR):DRC == 
-      not R has IntegralDomain => error(err1)
       sqrt(abs(determinant(g)))*reduce(_*,baseForms())
 
 
@@ -133,19 +136,18 @@ DifferentialForms(R,v) : Exports == Implementation where
     -- flip 0->1, 1->0 
     flip(b:EAB):EAB ==
       --bl := convert(b)$EAB
-      bl:=b pretend List(Integer)
+      bl:=eab2li(b)
       [(i+1) rem 2 for i in bl]::EAB
 
 
     -- list the positions of a's (a=0,1) in x
     pos(x:EAB, a:Integer):List(Integer) ==
-      y:List(Integer):= x pretend List(Integer) 
+      y:List(Integer):=eab2li(x) 
       [j for j in 1..#y | y.j=a]
 
 
     -- compute dot of singletons, diagonal g
     dot1(g:SMR,r:REA, s:REA):X ==
-      not R has IntegralDomain => error(err1)
       test(r.k ~= s.k) => 0::X
       idx := pos(r.k,1)
       idx = [] => r.c * s.c
@@ -154,7 +156,6 @@ DifferentialForms(R,v) : Exports == Implementation where
 
     -- compute dot of singleton terms, general symmetric g
     dot2(g:SMR,r:REA, s:REA):X ==
-      not R has IntegralDomain => error(err1)
       pr := pos(r.k,1) -- list positions of 1 in r
       ps := pos(s.k,1) -- list positions of 1 in s
       test(#pr ~= #ps) => 0::X  -- not same degree => 0
@@ -169,24 +170,14 @@ DifferentialForms(R,v) : Exports == Implementation where
   
     -- export
     dot(g,x,y) ==
-      not symmetric? g => error(err2)
-      tx:List REA := x pretend List(REA)
-      ty:List REA := y pretend List(REA)
+      not symmetric? g => error(err1)
+      tx:List REA := drc2rea(x)
+      ty:List REA := drc2rea(y)
       tx = [] or ty = [] => 0::X
       if diagonal? g then -- better performance 
         reduce("+",[dot1(g,tx.j,ty.j) for j in 1..#tx])
       else
         reduce("+",[dot2(g,tx.j,ty.j) for j in 1..#tx])
-
-
-
-    -- export
-    --proj0(x,p) ==
-    --  p < 0 or p > #v => error(err4)
-    --  t:List REA := x pretend List REA
-    --  idx := [j for j in 1..#t | #pos(t.j.k,1)=p]
-    --  s := [copy(t.j) for j in idx::List(NNI)]
-    --  convert(s)$DRC
 
 
     proj(p,x) ==
@@ -200,9 +191,9 @@ DifferentialForms(R,v) : Exports == Implementation where
  
 
     conjBasisTerm(x:DRC):DRC ==
-      x=0$DRC => error(err7)
-      x ~= leadingBasisTerm(x) => error(err6)
-      t:EAB:=(x pretend List(REA)).1.k
+      x=0$DRC => error(err6)
+      x ~= leadingBasisTerm(x) => error(err5)
+      t:EAB:=drc2rea(x).1.k
       l:List(Integer):=exponents(t)
       m:List(DRC):=[generator(i)$DRC for i in 1..#l | l.i=0]
       m=[] => 1$DRC
@@ -210,15 +201,15 @@ DifferentialForms(R,v) : Exports == Implementation where
       
   
     atomizeBasisTerm(x:DRC):List(DRC) ==
-      x=0$DRC => error(err7)
-      x ~= leadingBasisTerm(x) => error(err6)
-      t:EAB:=(x pretend List(REA)).1.k
+      x=0$DRC => error(err6)
+      x ~= leadingBasisTerm(x) => error(err5)
+      t:EAB:=drc2rea(x).1.k
       l:List(Integer):=exponents(t)
       [generator(i)$DRC for i in 1..#l | l.i=1] 
 
 
     intProdBasisTerm(w:Vector X, x:DRC):DRC ==
-      x ~= leadingBasisTerm(x) => error(err6)
+      x ~= leadingBasisTerm(x) => error(err5)
       degree(x)=0 => 0$DRC
       degree(x)=1 => w.position(x,baseForms()) * 1$DRC
       a:List(DRC):=atomizeBasisTerm(x)
@@ -238,18 +229,9 @@ DifferentialForms(R,v) : Exports == Implementation where
       a+b
 
 
---
-    --eps0(x:DRC):Integer ==
-    --  eta:DRC:=reduce("*",[generator(j)$DRC for j in 1..n])
-    --  if opposite?(x*conjBasisTerm(x),eta)$DRC then
-    --    return(-1)
-    --  else
-    --    return 1
-
     eps(x:DRC):X == leadingCoefficient(x*conjBasisTerm(x))
 
     hodgeStarBT(g:SMR,x:DRC):DRC ==
-      not R has IntegralDomain => error(err1)
       q:=sqrt(abs(determinant(g)))
       p:=degree(x)
       J:=monomials(p)

@@ -18,8 +18,7 @@ Minimal documentation of DeRhamComplex can be found at
 
   -->  http://kfp.bitbucket.org/fricas-derham/
   
-or in the folder 'doc/derham'. Note that a modified version of DeRhamComplex
-is used as long as the one included in FriCAS will not be updated. 
+or in the folder 'doc/derham'. 
 
 -------------
 Quick Install
@@ -49,35 +48,27 @@ either delete everything in 'lib' or use ')lisp (compile-dform)'.
 -----------------------
 Installing manually ...
 -----------------------
-Just compile the files derham.spad and dform.spad in 'src' (watch order!):
+Just compile the file dform.spad in 'src' :
 
- )compile derham
  )compile dform
  
 This will produce the following libs which have to be loaded manually:
 
- ANTISYM.NRLIB
- DERHAM.NRLIB
  DFORM.NRLIB
- EAB.NRLIB
- LALG.NRLIB
- LALG-.NRLIB
-
 
 -------
 Testing
 -------
 There is a test file 'test_dform.input' in folder 'test' which can be run
 either by the function 'testDFORM()$Lisp' when installed using Quicklisp
-or manually by ')read' as usual. Note that a ')clear all' will be issued!
+or manually by ')read test_dform' as usual. Note that a ')clear all' will be 
+issued!
 
-In the same folder there are some other examples and test files for DERHAM.
+In the same folder there are some other examples and test files.
 
 
 --
-$Version 1.0, 12-AUG-2016$
-
-
+$Version 1.1, 17-SEP-2016$
 
 
 
