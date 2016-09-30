@@ -46,7 +46,7 @@ the path in the function defined above.
 
 2. Clone https://github.com/nilqed/dform.git  to ``~/quicklisp/local-projects``
 
-3. Start *FriCAS* and issue: 
+3. Start *FriCAS* (version 1.3 or later) and issue: 
 
 ::
     
@@ -104,8 +104,7 @@ the *HTML* files or even building other formats (e.g. *LaTeX*) you will need
 a Sphinx_ installation::
     
     make html
-    make latex 
-    ...
+    
     
 .. _Sphinx: http://www.sphinx-doc.org/en/stable/
 
