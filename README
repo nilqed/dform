@@ -9,16 +9,17 @@ Hodge star dual and interior product of a differential form with respect to a
 -------------
 Documentation
 -------------
-The folder 'doc' contains the sphinx version of the manual while the compiled
-HTML files are in 'doc/_build/html'. There is an online version:
+The folder 'doc' contains the sphinx sources of the manual while the compiled
+HTML files are in 'docs/'. There is an online version served by github pages 
+(master branch /docs folder):
  
-  -->  http://kfp.bitbucket.org/fricas-dform/
+  -->  http://nilqed.github.io/dform/
   
 Minimal documentation of DeRhamComplex can be found at 
 
   -->  http://kfp.bitbucket.org/fricas-derham/
   
-or in the folder 'doc/derham'. 
+or in the folder 'sphinx/derham'. 
 
 -------------
 Quick Install
@@ -39,6 +40,9 @@ the steps below:
 2. Clone https://github.com/nilqed/dform.git  to '~/quicklisp/local-projects' 
 
 3. Start FriCAS and issue: quickLoad dform 
+   *NOTE* If you start fricas without the '-nosman' option then you have to
+          use ')frame next' in order to see the function 'quickLoad' (This
+          is because .fricas.input is read into frame 'initial'.
 
 The function 'quickLoad' will compile everything once (src) and when called next
 time the binaries are loaded (lib). If you want to recompile the sources then
@@ -68,7 +72,7 @@ In the same folder there are some other examples and test files.
 
 
 --
-$Version 1.1, 17-SEP-2016$
+$Version 1.1, 17-SEP-2016/upd. 30-SEP-2016$
 
 
 
