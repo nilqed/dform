@@ -9,9 +9,9 @@ Hodge star dual and interior product of a differential form with respect to a
 -------------
 Documentation
 -------------
-The folder 'doc' contains the sphinx sources of the manual while the compiled
-HTML files are in 'docs/'. There is an online version served by github pages 
-(master branch /docs folder):
+The folder 'sphinx' contains the sphinx sources of the manual while the 
+compiled HTML files are in 'docs/'. There is an online version served by 
+GitHub pages (master branch /docs folder):
  
   -->  http://nilqed.github.io/dform/
   
