@@ -63,7 +63,8 @@ the path in the function defined above.
     )frame next 
     
   in order to see the function ``quickLoad`` (This is because ``.fricas.input``
-  is read into frame ``initial`` (use ``)frame names`` to see frame names).
+  is read into frame ``initial`` - use ``)frame names`` to see a list of all
+  frames.
   If you do not like to use a startup file then you can use the lisp commands
   of course:
 
