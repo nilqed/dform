@@ -17,8 +17,8 @@ Documentation
 -------------
 The folder ``sphinx`` contains the sphinx sources of the manual while the 
 compiled HTML files are in ``docs``. There is an online_ version served by 
-GitHub pages (``master branch /docs folder``). **New**: _PDF version made by
-sphinx.
+GitHub pages (``master branch /docs folder``). **New**: PDF_ version made by
+sphinx (make latexpdf).
 
 .. _online:  http://nilqed.github.io/dform/
 
