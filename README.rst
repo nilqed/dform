@@ -4,6 +4,10 @@
 FriCAS package: DifferentialForms (DFORM)
 =========================================
 
+:Version: 1.2.0
+:Update: 22-DEC-2016
+  
+
 Builds on domain ``DeRhamComplex``, providing functions for computing volume 
 forms, Hodge star dual and interior product of a differential form with respect 
 to a (pseudo-) Riemannian metric. 
