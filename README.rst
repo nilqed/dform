@@ -17,7 +17,8 @@ Documentation
 -------------
 The folder ``sphinx`` contains the sphinx sources of the manual while the 
 compiled HTML files are in ``docs``. There is an online_ version served by 
-GitHub pages (``master branch /docs folder``).
+GitHub pages (``master branch /docs folder``). **New**: _PDF version made by
+sphinx.
 
 .. _online:  http://nilqed.github.io/dform/
 
@@ -27,7 +28,7 @@ Some documentation of DeRhamComplex can be found here_ or in the folder
 
 .. _here: http://kfp.bitbucket.org/fricas-derham/
 .. _API: http://fricas.github.io/api/DeRhamComplex.html?highlight=derham
-  
+.. _PDF: https://nilqed.github.io/dform/DifferentialForms.pdf  
 
 -------------
 Quick Install
